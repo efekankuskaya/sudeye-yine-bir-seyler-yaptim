@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>...</title>
+
+<style>
 body {
   margin: 0;
   padding: 0;
@@ -37,7 +45,6 @@ img {
   margin-bottom: 15px;
 }
 
-/* Buton daha uyumlu pembe */
 button {
   width: 100%;
   padding: 14px;
@@ -79,3 +86,89 @@ button:active {
     opacity: 0;
   }
 }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="page1">
+    <h1>şans dilemeni beklemiştim… kötü geçti sınavım 😒</h1>
+    <img src="angry.gif">
+    <button onclick="nextPage(2)">ne kadar kızdığımı görmek için tıkla</button>
+  </div>
+
+  <div id="page2" class="hidden">
+    <h1>ama sana kızmaya kıyamam ki 🙂</h1>
+    <img src="cute.gif">
+    <button onclick="nextPage(3)">son bir şey var...</button>
+  </div>
+
+  <div id="page3" class="hidden">
+    <h1>
+      çok mu meşgulsün yoksa benimle uğraşmak mı istemiyosun bilmiyorum ama teklifimi bırakıyorum:
+      cuma günü maçım var, kamera kurmamı ister misin? 👀
+    </h1>
+    <img src="shy.gif">
+
+    <div class="btn-group">
+      <button onclick="nextPage(4)">Evet</button>
+      <button onclick="nextPage(5)">Hayır</button>
+    </div>
+  </div>
+
+  <div id="page4" class="hidden">
+    <h1>
+      bu sefer baş harfi doğru yazcam :)) kamera açısını da senin için daha güzel ayarlayacağım
+    </h1>
+    <img src="happy.gif">
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.8;">
+      (attığım reelse de bakar mısın 👉👀)
+    </p>
+  </div>
+
+  <div id="page5" class="hidden">
+    <img src="sad.gif">
+  </div>
+
+</div>
+
+<script>
+let heartInterval;
+
+function createHeart(type) {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText = type === "broken" ? "💔" : "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}
+
+function startHearts(type) {
+  clearInterval(heartInterval);
+  heartInterval = setInterval(() => createHeart(type), 300);
+}
+
+function nextPage(pageNumber) {
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById("page" + i).classList.add("hidden");
+  }
+
+  document.getElementById("page" + pageNumber).classList.remove("hidden");
+
+  if (pageNumber === 1 || pageNumber === 5) {
+    startHearts("broken");
+  } else {
+    startHearts("normal");
+  }
+}
+
+startHearts("broken");
+</script>
+
+</body>
+</html>
